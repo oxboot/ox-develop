@@ -1,0 +1,15 @@
+{
+  "name": "oxboot/ox",
+  "description": "Ox - Command-line server control panel & deployment tool written in PHP",
+  "license": "MIT",
+  "authors": [
+    {
+        "name": "Zorca",
+        "email": "vs@zorca.org"
+    }
+  ],
+  "require": {
+    "symfony/console": "^3.3",
+    "symfony/process": "^3.3"
+  }
+}
