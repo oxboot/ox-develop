@@ -1,4 +1,6 @@
-# ox
-Ox - Command-line server control panel &amp; deployment tool written in PHP
+# Ox
+
+## Install
+
 ## Commands
-site:create domain.dev
+```site:create domain.dev```
