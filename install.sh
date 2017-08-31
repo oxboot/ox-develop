@@ -38,6 +38,7 @@ function ox_install()
   service php7.1-fpm restart &>> /dev/null
   ox_lib_echo "Install NGINX, please wait..."
   apt-add-repository 'ppa:nginx/stable' -y
+  apt-get update &>> /dev/null
   apt-get -y install nginx || ox_lib_error "Unable to install NGINX, exit status " 1
   service nginx restart &>> /dev/null
 }
