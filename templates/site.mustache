@@ -1,0 +1,22 @@
+server {
+
+  server_name {{site_name}};
+
+  access_log /var/log/nginx/{{site_name}}.access.log;
+  error_log /var/log/nginx/{{site_name}}.error.log;
+
+  root /var/www/{{site_name}}/htdocs;
+
+  index index.php index.html index.htm;
+
+  location / {
+    try_files $uri $uri/ /index.php?q=$uri&$args;
+  }
+
+  location ~ \.php$ {
+    try_files $uri =404;
+    include /etc/nginx/fastcgi.conf;
+    fastcgi_pass unix:/run/php/php7.1-fpm.sock;
+  }
+
+}
