@@ -1,6 +1,10 @@
 # Ox
 
 ## Install
-
+```bash
+wget -qO ee oxboot.com/ox && sudo bash ox
+```
 ## Commands
-```site:create domain.dev```
+```bash
+site:create domain.dev
+```
