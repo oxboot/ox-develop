@@ -1,5 +1,5 @@
 {
-  "directories": ["src"],
+  "directories": ["src", "templates"],
   "finder": [
     {
       "name": "*.php",
@@ -11,6 +11,6 @@
     }
   ],
   "main": "bin/ox",
-  "output": "bin/ox.phar",
+  "output": "ox.phar",
   "stub": true
 }
