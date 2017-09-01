@@ -1,10 +1,11 @@
 # Ox
-
+**Ox currently supports:**
+- Ubuntu 16.04
 ## Install
 ```bash
 wget -qO ee oxboot.com/ox && sudo bash ox
 ```
 ## Commands
 ```bash
-site:create domain.dev
+ox site:create domain.dev
 ```
