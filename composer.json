@@ -19,7 +19,7 @@
       "Ox\\": "src/"
     },
     "files": [
-      "src/functions/ox-utils.php"
+      "src/functions/functions.php"
     ]
   }
 }

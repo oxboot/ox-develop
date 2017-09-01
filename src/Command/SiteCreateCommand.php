@@ -23,7 +23,7 @@ class SiteCreateCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        ox_echo_info('Create site ' . $input->getArgument('site_name'));
+        ox_echo_info('Try to create site ' . $input->getArgument('site_name'));
         $fs = new Filesystem();
         $site_dir = '/var/www/' . $input->getArgument('site_name');
         $site_webdir = $site_dir . '/htdocs';
@@ -31,7 +31,7 @@ class SiteCreateCommand extends Command
             ox_echo_error('Site ' . $input->getArgument('site_name') . ' already exists');
             return false;
         }
-        $fs->mkdir($site_webdir, 0755);
+        ox_mkdir($site_webdir);
         $fs->dumpFile($site_webdir . '/index.php', '<?php phpinfo();');
         $m = new Mustache_Engine(['loader' => new Mustache_Loader_FilesystemLoader(OX_DIR . '/../templates')]);
         $site_template =  $m->render('site', ['site_name' => $input->getArgument('site_name')]);
@@ -42,6 +42,7 @@ class SiteCreateCommand extends Command
             ox_echo_error('Site ' . $input->getArgument('site_name') . ' not created, Nginx configuration error occurred and all changes restored');
             return false;
         }
+        ox_chown($site_dir, 'www-data', 'www-data');
         ox_console('service nginx restart');
         ox_echo_success('Site ' . $input->getArgument('site_name') . ' created successful');
         return true;

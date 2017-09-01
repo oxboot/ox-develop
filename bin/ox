@@ -9,5 +9,6 @@ use Symfony\Component\Console\Application;
 $application = new Application();
 
 $application->add(new Ox\Command\SiteCreateCommand());
+$application->add(new Ox\Command\SiteDeleteCommand());
 
 $application->run();
