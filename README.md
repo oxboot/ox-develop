@@ -3,7 +3,7 @@
 - Ubuntu 16.04
 ## Install
 ```bash
-wget -qO ee oxboot.com/ox && sudo bash ox
+wget -qO ox oxboot.com/ox && sudo bash ox
 ```
 ## Commands
 ```bash

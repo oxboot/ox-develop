@@ -1,3 +1,4 @@
 .vagrant/
 /vendor/
-ox.phar
+*.phar
+*.log
