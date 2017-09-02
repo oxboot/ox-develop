@@ -32,14 +32,13 @@ class SiteCreateCommand extends Command
             return false;
         }
         ox_mkdir($site_webdir);
-        $fs->dumpFile($site_webdir . '/index.php', '<?php phpinfo();');
         $m = new Mustache_Engine(['loader' => new Mustache_Loader_FilesystemLoader(OX_DIR . '/../templates')]);
-        $site_template =  $m->render('site', ['site_name' => $input->getArgument('site_name')]);
-        $fs->dumpFile('/etc/nginx/sites-available/' . $input->getArgument('site_name'), $site_template);
+        $fs->dumpFile('/etc/nginx/sites-available/' . $input->getArgument('site_name'), $m->render('nginx/site', ['site_name' => $input->getArgument('site_name')]));
         $fs->symlink( '/etc/nginx/sites-available/' . $input->getArgument('site_name'), '/etc/nginx/sites-enabled/' . $input->getArgument('site_name'));
-        if (!ox_console('nginx -t')) {
+        $fs->dumpFile($site_webdir . '/index.php', $m->render('php/default', ['site_name' => $input->getArgument('site_name')]));
+        if (!ox_console('nginx -t') || !$fs->exists([$site_dir, '/etc/nginx/sites-available/' . $input->getArgument('site_name'), '/etc/nginx/sites-enabled/' . $input->getArgument('site_name')])) {
             $fs->remove([$site_dir, '/etc/nginx/sites-available/' . $input->getArgument('site_name'), '/etc/nginx/sites-enabled/' . $input->getArgument('site_name')]);
-            ox_echo_error('Site ' . $input->getArgument('site_name') . ' not created, Nginx configuration error occurred and all changes restored');
+            ox_echo_error('Site ' . $input->getArgument('site_name') . ' not created, error occurred and all changes will be restored');
             return false;
         }
         ox_chown($site_dir, 'www-data', 'www-data');
