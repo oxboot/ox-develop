@@ -8,6 +8,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Mustache_Engine;
 use Mustache_Loader_FilesystemLoader;
 use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\Yaml\Yaml;
 
 class SiteCreateCommand extends Command
 {
@@ -43,6 +44,8 @@ class SiteCreateCommand extends Command
         }
         ox_chown($site_dir, 'www-data', 'www-data');
         ox_console('service nginx restart');
+        $yaml = Yaml::dump(['site_name' => $input->getArgument('site_name')]);
+        $fs->dumpFile('/etc/ox/sites/' . $input->getArgument('site_name') . '.yml', $yaml);
         ox_echo_success('Site ' . $input->getArgument('site_name') . ' created successful');
         return true;
     }
