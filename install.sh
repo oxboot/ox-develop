@@ -41,6 +41,12 @@ function ox_install()
   apt-get update &>> /dev/null
   apt-get -y install nginx || ox_lib_error "Unable to install NGINX, exit status " 1
   service nginx restart &>> /dev/null
+  ox_lib_echo "Install MariaDB, please wait..."
+  apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 0xF1656F24C74CD1D8
+  add-apt-repository 'deb [arch=amd64,i386,ppc64el] http://ams2.mirrors.digitalocean.com/mariadb/repo/10.2/ubuntu xenial main'
+  apt-get update &>> /dev/null
+  apt-get -y -q install mariadb-server || ox_lib_error "Unable to install MariaDB, exit status " 1
+  service mysql restart &>> /dev/null
 }
 
 # Starting script point
