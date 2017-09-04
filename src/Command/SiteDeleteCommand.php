@@ -21,17 +21,18 @@ class SiteDeleteCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        ox_echo_info('Try to delete site ' . $input->getArgument('site_name'));
+        $site_name = $input->getArgument('site_name');
+        ox_echo_info('Try to delete site ' . $site_name);
         $fs = new Filesystem();
-        $site_dir = '/var/www/' . $input->getArgument('site_name');
+        $site_dir = '/var/www/' . $site_name;
         $site_webdir = $site_dir . '/htdocs';
         if (!$fs->exists($site_dir)) {
-            ox_echo_error('Site ' . $input->getArgument('site_name') . ' not exists');
+            ox_echo_error('Site ' . $site_name . ' not exists');
             return false;
         }
-        $fs->remove([$site_dir, '/etc/nginx/sites-available/' . $input->getArgument('site_name'), '/etc/nginx/sites-enabled/' . $input->getArgument('site_name')]);
+        $fs->remove([$site_dir, '/etc/nginx/sites-available/' . $site_name, '/etc/nginx/sites-enabled/' . $site_name]);
         ox_console('service nginx restart');
-        ox_echo_success('Site ' . $input->getArgument('site_name') . ' deleted successful');
+        ox_echo_success('Site ' . $site_name . ' deleted successful');
         return true;
     }
 }
