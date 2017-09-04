@@ -4,6 +4,7 @@ namespace Ox\Command;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputArgument;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Yaml\Yaml;
@@ -17,12 +18,14 @@ class SiteCreateCommand extends Command
             ->setDescription('Creates a new site')
             ->setHelp('This command allows you to create a site')
             ->addArgument('site_name', InputArgument::REQUIRED, 'Name of the site')
+            ->addOption('mysql', null, InputOption::VALUE_NONE, 'MySQL support')
         ;
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $site_name = $input->getArgument('site_name');
+        $mysql = $input->getOption('mysql');
         ox_echo_info('Try to create site ' . $site_name);
         $fs = new Filesystem();
         $site_dir = '/var/www/' . $site_name;
@@ -42,7 +45,7 @@ class SiteCreateCommand extends Command
         }
         ox_chown($site_dir, 'www-data', 'www-data');
         ox_console('service nginx restart');
-        $yaml = Yaml::dump(['site_name' => $site_name]);
+        $yaml = Yaml::dump(['site_name' => $site_name, 'mysql' => $mysql]);
         $fs->dumpFile('/etc/ox/sites/' . $site_name . '.yml', $yaml);
         ox_echo_success('Site ' . $site_name . ' created successful');
         return true;
