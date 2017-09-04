@@ -7,8 +7,8 @@ php:
 services:
   - docker
 before_install:
-  - docker pull ubuntu:latest
-  - docker run -d ubuntu:latest
+  - docker pull ubuntu:16.04
+  - docker run -d ubuntu:16.04
 before_script:
 script:
-  - docker exec -t ubuntu:latest sudo ./install.sh
+  - docker exec -t ubuntu:16.04 sudo ./install.sh
