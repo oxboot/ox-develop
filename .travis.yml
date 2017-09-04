@@ -11,4 +11,4 @@ before_install:
   - docker run -d ubuntu:latest
 before_script:
 script:
-  - docker exec -t ubuntu sudo ./install.sh
+  - docker exec -t ubuntu:latest sudo ./install.sh
