@@ -5,6 +5,7 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Question\ConfirmationQuestion;
 use Symfony\Component\Filesystem\Filesystem;
 
 class SiteDeleteCommand extends Command
@@ -22,6 +23,11 @@ class SiteDeleteCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $site_name = $input->getArgument('site_name');
+        $helper = $this->getHelper('question');
+        $question = new ConfirmationQuestion('Delete site: Are you sure(y/N)?', false);
+        if (!$helper->ask($input, $output, $question)) {
+            return false;
+        }
         ox_echo_info('Try to delete site ' . $site_name);
         $fs = new Filesystem();
         $site_dir = '/var/www/' . $site_name;
