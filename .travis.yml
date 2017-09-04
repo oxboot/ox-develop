@@ -8,7 +8,7 @@ services:
   - docker
 before_install:
   - docker pull ubuntu
-  - docker run -it ubuntu
+  - docker run -d ubuntu
 before_script:
 script:
   - docker exec -t ubuntu sudo ./install.sh
