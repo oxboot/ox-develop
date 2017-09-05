@@ -65,9 +65,9 @@ if [ ! -x /usr/bin/lsb_release ]; then
 fi
 
 # Checking linux distro
-lsb_release -d | egrep -e "Ubuntu 16.04" &>> /dev/null
+lsb_release -d | grep -e "Ubuntu 14.04" -e "Ubuntu 16.04" &>> /dev/null
 if [ "$?" -ne "0" ]; then
-    ox_lib_echo_fail "Ox only supports Ubuntu 16.04"
+    ox_lib_echo_fail "Ox only supports Ubuntu 14.04 & Ubuntu 16.04"
     exit 100
 fi
 
